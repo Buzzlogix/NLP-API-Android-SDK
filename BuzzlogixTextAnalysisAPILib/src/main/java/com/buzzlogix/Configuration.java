@@ -1,12 +1,15 @@
 /*
  * BuzzlogixTextAnalysisAPILib
  *
- * This file was automatically generated for Buzzlogix by APIMATIC BETA v2.0 on 11/09/2015
+ * This file was automatically generated for Buzzlogix by APIMATIC BETA v2.0 on 11/18/2015
  */
 package com.buzzlogix;
- 
+
 import android.content.Context;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
@@ -22,20 +25,40 @@ public class Configuration {
     public static void initialize(Context context){
         if(initialized)
             throw new IllegalStateException("Already initialized");
+
         requestQueue = Volley.newRequestQueue(context);
-    
-        initialized = true;
+        String packageName = context.getPackageName();
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            ApplicationInfo app = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            Bundle bundle = app.metaData;
+
+            apikey = bundle.getString("apikey");
+
+            initialized = true;
+        }
+        catch (Exception ex){
+            throw new IllegalStateException("Unable to initialize", ex);
+        }
     }
 
-	// volley request queue needs to be initialized before use
+    // volley request queue needs to be initialized before use
     public static RequestQueue getRequestQueue() {
         if(!initialized)
             throw new IllegalStateException("Must initialize before accessing request queue");
         return requestQueue;
     }
+    
 
-    //Supply your API key. 
-    //TODO: Replace the apikey with an appropriate value
-    public static String apikey = "TODO: Replace";
+    //private backing field for Apikey
+    private static String apikey = null;
 
+    //Supply your API Key. 
+
+    public static String getApikey() {
+        if(!initialized)
+            throw new IllegalStateException("Must initialize configuration before use");
+
+        return apikey;
+    }
 }

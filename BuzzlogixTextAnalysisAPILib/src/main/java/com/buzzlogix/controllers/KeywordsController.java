@@ -17,11 +17,11 @@ import com.buzzlogix.http.response.HttpStringResponse;
 import com.buzzlogix.http.client.APICallBack;
 import com.buzzlogix.*;
 
-public class TwittersentimentController extends BaseController {
+public class KeywordsController extends BaseController {
     /**
      * Initialize the base controller using the given http client
      */
-    public TwittersentimentController() {
+    public KeywordsController() {
         super();
     }
 
@@ -29,15 +29,15 @@ public class TwittersentimentController extends BaseController {
      * Initialize the base controller using the given http client
      *
      * @param _client The given http client */
-    public TwittersentimentController(HttpClient _client) {
+    public KeywordsController(HttpClient _client) {
         super(_client);
     }
 
     /**
-     * The Tweet should be provided as text/plain in the body
+     * The text should be provided as text/plain in the body
      * @param    body    Required parameter: Supply text to be classified.
 	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
-    public void createReturnEnglishTwitterSentimentAsync(
+    public void createReturnEnglishKeywordsAsync(
             final String body,
             final APICallBack<LinkedHashMap<String, Object>> callBack
     ) {
@@ -46,13 +46,13 @@ public class TwittersentimentController extends BaseController {
 
         //prepare query string for API call
         StringBuilder queryBuilder = new StringBuilder(baseUri);
-        queryBuilder.append("/twittersentiment");
+        queryBuilder.append("/keywords");
         //validate and preprocess url
         String queryUrl = APIHelper.cleanUrl(queryBuilder);
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4880470269249982526L;
+            private static final long serialVersionUID = 5369809358781153371L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -110,10 +110,12 @@ public class TwittersentimentController extends BaseController {
     }
         
     /**
-     * The Tweet should be provided as multipart/form-data with the key 'text'. Files can be uploaded.
+     * The text should be provided as multipart/form-data with the key 'text'. Files can be uploaded.
+     * @param    apikey    Required parameter: Supply your API key.
      * @param    body    Required parameter: Supply text to be classified.
 	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
-    public void createReturnEnglishTwitterSentimentFormAsync(
+    public void createReturnEnglishKeywordsFormAsync(
+            final String apikey,
             final String body,
             final APICallBack<LinkedHashMap<String, Object>> callBack
     ) {
@@ -122,16 +124,17 @@ public class TwittersentimentController extends BaseController {
 
         //prepare query string for API call
         StringBuilder queryBuilder = new StringBuilder(baseUri);
-        queryBuilder.append("/twittersentiment/form");
+        queryBuilder.append("/keywords/form");
         //validate and preprocess url
         String queryUrl = APIHelper.cleanUrl(queryBuilder);
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5731670613837147107L;
+            private static final long serialVersionUID = 5188580488738601007L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
+                    put( "apikey", apikey );
                     put( "apikey", Configuration.getApikey() );
             }
         };
