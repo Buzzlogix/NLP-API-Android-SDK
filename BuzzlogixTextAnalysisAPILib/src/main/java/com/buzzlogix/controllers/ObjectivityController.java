@@ -1,7 +1,7 @@
 /*
  * BuzzlogixTextAnalysisAPILib
  *
- * This file was automatically generated for Buzzlogix by APIMATIC BETA v2.0 on 11/18/2015
+ * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 11/25/2015
  */
 package com.buzzlogix.controllers;
 
@@ -52,7 +52,7 @@ public class ObjectivityController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5006291793261354486L;
+            private static final long serialVersionUID = 5105367736337597518L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -128,7 +128,7 @@ public class ObjectivityController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5017151138213747278L;
+            private static final long serialVersionUID = 4753620810013795528L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );

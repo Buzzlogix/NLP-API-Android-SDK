@@ -1,7 +1,7 @@
 /*
  * BuzzlogixTextAnalysisAPILib
  *
- * This file was automatically generated for Buzzlogix by APIMATIC BETA v2.0 on 11/18/2015
+ * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 11/25/2015
  */
 package com.buzzlogix.controllers;
 
@@ -52,7 +52,7 @@ public class KeywordsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5369809358781153371L;
+            private static final long serialVersionUID = 5584774380052455443L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -111,11 +111,9 @@ public class KeywordsController extends BaseController {
         
     /**
      * The text should be provided as multipart/form-data with the key 'text'. Files can be uploaded.
-     * @param    apikey    Required parameter: Supply your API key.
      * @param    body    Required parameter: Supply text to be classified.
 	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
     public void createReturnEnglishKeywordsFormAsync(
-            final String apikey,
             final String body,
             final APICallBack<LinkedHashMap<String, Object>> callBack
     ) {
@@ -130,11 +128,10 @@ public class KeywordsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5188580488738601007L;
+            private static final long serialVersionUID = 4921881354696173567L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
-                    put( "apikey", apikey );
                     put( "apikey", Configuration.getApikey() );
             }
         };
