@@ -1,7 +1,7 @@
 /*
  * BuzzlogixTextAnalysisAPILib
  *
- * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 11/25/2015
+ * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 12/06/2015
  */
 package com.buzzlogix.controllers;
 
@@ -37,7 +37,7 @@ public class ObjectivityController extends BaseController {
      * The text should be provided as text/plain in the body
      * @param    body    Required parameter: Supply text to be classified.
 	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
-    public void createReturnEnglishObjectivityAsync(
+    public void createReturnEnglishObjectivityPlaintextAsync(
             final String body,
             final APICallBack<LinkedHashMap<String, Object>> callBack
     ) {
@@ -52,11 +52,11 @@ public class ObjectivityController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5105367736337597518L;
+            private static final long serialVersionUID = 4936188433170134791L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
-                    put( "apikey", Configuration.getApikey() );
+                    put( "X-Mashape-Key", Configuration.getXMashapeKey() );
             }
         };
 
@@ -72,16 +72,7 @@ public class ObjectivityController extends BaseController {
                         try {
                             //Error handling using HTTP status codes
                             int responseCode = response.getStatusCode();
-                            if (responseCode == 401)
-                                throw new APIException("No API Key found in headers, body or querystring", 401, response.getRawBody());
-
-                            else if (responseCode == 403)
-                                throw new APIException("Invalid authentication credentials", 403, response.getRawBody());
-
-                            else if (responseCode == 429)
-                                throw new APIException("API rate limit exceeded", 429, response.getRawBody());
-
-                            else if ((responseCode < 200) || (responseCode > 206)) //[200,206] = HTTP OK
+                            if ((responseCode < 200) || (responseCode > 206)) //[200,206] = HTTP OK
                                 throw new APIException("HTTP Response Not OK", responseCode, response.getRawBody());
 
                             //extract result from the http response
@@ -111,10 +102,10 @@ public class ObjectivityController extends BaseController {
         
     /**
      * The text should be provided as multipart/form-data with the key 'text'. Files can be uploaded.
-     * @param    body    Required parameter: Supply text to be classified.
+     * @param    text    Required parameter: Supply text to be classified.
 	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
-    public void createReturnEnglishObjectivityFormAsync(
-            final String body,
+    public void createReturnEnglishObjectivityMultipartFormAsync(
+            final File text,
             final APICallBack<LinkedHashMap<String, Object>> callBack
     ) {
         //the base uri for api requests
@@ -122,22 +113,30 @@ public class ObjectivityController extends BaseController {
 
         //prepare query string for API call
         StringBuilder queryBuilder = new StringBuilder(baseUri);
-        queryBuilder.append("/objectivity/form");
+        queryBuilder.append("/objectivity");
         //validate and preprocess url
         String queryUrl = APIHelper.cleanUrl(queryBuilder);
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4753620810013795528L;
+            private static final long serialVersionUID = 5540004793381578091L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
-                    put( "apikey", Configuration.getApikey() );
+                    put( "X-Mashape-Key", Configuration.getXMashapeKey() );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 4761396656025793962L;
+            {
+                    put( "text", text );
             }
         };
 
         //prepare and invoke the API call request to fetch the response
-        final HttpRequest request = clientInstance.postBody(queryUrl, headers, body);
+        final HttpRequest request = clientInstance.post(queryUrl, headers, APIHelper.prepareFormFields(parameters));
 
         //invoke request and get response
         Runnable responseTask = new Runnable() {
@@ -148,16 +147,82 @@ public class ObjectivityController extends BaseController {
                         try {
                             //Error handling using HTTP status codes
                             int responseCode = response.getStatusCode();
-                            if (responseCode == 401)
-                                throw new APIException("No API Key found in headers, body or querystring", 401, response.getRawBody());
+                            if ((responseCode < 200) || (responseCode > 206)) //[200,206] = HTTP OK
+                                throw new APIException("HTTP Response Not OK", responseCode, response.getRawBody());
 
-                            else if (responseCode == 403)
-                                throw new APIException("Invalid authentication credentials", 403, response.getRawBody());
+                            //extract result from the http response
+                            LinkedHashMap<String, Object> result = APIHelper.deserialize(((HttpStringResponse)response).getBody());
 
-                            else if (responseCode == 429)
-                                throw new APIException("API rate limit exceeded", 429, response.getRawBody());
+                            //let the caller know of the success
+                            callBack.onSuccess(context, result);
+                        } catch (APIException error) {
+                            //let the caller know of the error
+                            callBack.onFailure(context, error);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext context, Throwable error) {
+                        //let the caller know of the failure
+                        callBack.onFailure(context, error);
+                    }
+                });
+            }
+        };
 
-                            else if ((responseCode < 200) || (responseCode > 206)) //[200,206] = HTTP OK
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(responseTask);
+    }
+        
+    /**
+     * Return whether a text is objective or subjective. The text should be supplied in an encoded form using key 'text'.
+     * @param    text    Required parameter: TODO: type description here
+	 * @return	Returns the LinkedHashMap<String, Object> response from the API call*/
+    public void createReturnEnglishObjectivityEncodedFormAsync(
+            final String text,
+            final APICallBack<LinkedHashMap<String, Object>> callBack
+    ) {
+        //the base uri for api requests
+        String baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder queryBuilder = new StringBuilder(baseUri);
+        queryBuilder.append("/objectivity");
+        //validate and preprocess url
+        String queryUrl = APIHelper.cleanUrl(queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> headers = new HashMap<String, String>() {
+            private static final long serialVersionUID = 5742539104552413502L;
+            {
+                    put( "user-agent", "APIMATIC 2.0" );
+                    put( "accept", "application/json" );
+                    put( "X-Mashape-Key", Configuration.getXMashapeKey() );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 4753317279914587323L;
+            {
+                    put( "text", text );
+            }
+        };
+
+        //prepare and invoke the API call request to fetch the response
+        final HttpRequest request = clientInstance.post(queryUrl, headers, APIHelper.prepareFormFields(parameters));
+
+        //invoke request and get response
+        Runnable responseTask = new Runnable() {
+            public void run() {
+                //make the API call
+                clientInstance.executeAsStringAsync(request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext context, HttpResponse response) {
+                        try {
+                            //Error handling using HTTP status codes
+                            int responseCode = response.getStatusCode();
+                            if ((responseCode < 200) || (responseCode > 206)) //[200,206] = HTTP OK
                                 throw new APIException("HTTP Response Not OK", responseCode, response.getRawBody());
 
                             //extract result from the http response

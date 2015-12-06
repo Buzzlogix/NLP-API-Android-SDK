@@ -1,7 +1,7 @@
 /*
  * BuzzlogixTextAnalysisAPILib
  *
- * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 11/25/2015
+ * This file was automatically generated for buzzlogix by APIMATIC BETA v2.0 on 12/06/2015
  */
 package com.buzzlogix;
 
@@ -15,7 +15,7 @@ import com.android.volley.toolbox.Volley;
 
 public class Configuration {
     //The base Uri for API calls
-    public static String baseUri = "http://text.buzzlogix.com:8000";
+    public static String baseUri = "https://buzzlogix-text-analysis.p.mashape.com";
 
     //retains status whether we have already initialized
     private static boolean initialized = false;
@@ -33,7 +33,7 @@ public class Configuration {
             ApplicationInfo app = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
             Bundle bundle = app.metaData;
 
-            apikey = bundle.getString("apikey");
+            xMashapeKey = bundle.getString("xmashapekey");
 
             initialized = true;
         }
@@ -50,15 +50,15 @@ public class Configuration {
     }
     
 
-    //private backing field for Apikey
-    private static String apikey = null;
+    //private backing field for XMashapeKey
+    private static String xMashapeKey = null;
 
     //Supply your API Key. 
 
-    public static String getApikey() {
+    public static String getXMashapeKey() {
         if(!initialized)
             throw new IllegalStateException("Must initialize configuration before use");
 
-        return apikey;
+        return xMashapeKey;
     }
 }

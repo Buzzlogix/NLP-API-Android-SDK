@@ -12,7 +12,7 @@ com.buzzlogix.Configuration.initialize(appContext);
 Here, the context is from the module that contains the configuration AndroidManifest.xml
 The manifest files must contain the following configuration parameters.
 
-	apikey		Supply your API Key. 
+	xmashapekey		Supply your API Key. 
 
 How To Build: 
 =============
